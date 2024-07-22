@@ -1,6 +1,5 @@
 --original: https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt
 --this was made to fix specific issues i had
---test test ggaae
 
 local DiscordLib = {}
 local UserInputService = game:GetService("UserInputService")
@@ -2649,122 +2648,64 @@ function ChannelContent:Dropdown(text, list, defaultValue, callback)
     DropItemHolderLayout.Name = "ItemHolderLayout"
     DropItemHolderLayout.Parent = DropItemHolder
     DropItemHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    DropItemHolderLayout.Padding = UDim.new(0, 5)
-
-    for i,v in next, list do
-        itemcount = itemcount + 1
-        framesize = framesize + 25
-
-        local Item = Instance.new("TextButton")
-
-        Item.Name = "Item"
-        Item.Parent = DropItemHolder
-        Item.BackgroundColor3 = Color3.fromRGB(48, 51, 57)
-        Item.Size = UDim2.new(0, 379, 0, 25)
-        Item.AutoButtonColor = false
-        Item.Font = Enum.Font.Gotham
-        Item.Text = v
-        Item.TextColor3 = Color3.fromRGB(212, 212, 212)
-        Item.TextSize = 14.000
-        Item.MouseButton1Click:Connect(function()
-            TweenService:Create(DropItemHolder, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 385, 0, 0)}):Play()
-            TweenService:Create(Dropdown, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 403, 0, 73)}):Play()
-            TweenService:Create(DropdownFrameMain, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 392, 0, 0)}):Play()
-            wait(.3)
-            DropdownFrameMain.Visible = false
-            DropdownFrameMainOutline.Visible = false
-            Dropdown.Size = UDim2.new(0, 403, 0, 73)
-            CurrentSelectedText.Text = v
-            callback(v)
-            DropTog = not DropTog
-        end)
-
-        Item.MouseEnter:Connect(function()
-            TweenService:Create(Item, TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(52, 55, 60)}):Play()
-        end)
-
-        Item.MouseLeave:Connect(function()
-            TweenService:Create(Item, TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(48, 51, 57)}):Play()
-        end)
-
-        DropItemHolder.CanvasSize = UDim2.new(0, 0, 0, framesize + 10)
-    end
-
+    DropItemHolderLayout.Padding = UDim.new(0, 0)
+    
     DropdownFrameBtn.MouseButton1Click:Connect(function()
         if DropTog == false then
             DropdownFrameMain.Visible = true
             DropdownFrameMainOutline.Visible = true
-            TweenService:Create(DropItemHolder, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 385, 0, framesize)}):Play()
-            TweenService:Create(Dropdown, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 403, 0, 38 + framesize)}):Play()
-            TweenService:Create(DropdownFrameMain, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 392, 0, framesize)}):Play()
+            Dropdown.Size = UDim2.new(0, 403, 0, 73 + DropdownFrameMainOutline.AbsoluteSize.Y)
+            ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolder.CanvasSize.Y.Offset + DropdownFrameMainOutline.AbsoluteSize.Y)
+            DropTog = true
         else
-            TweenService:Create(DropItemHolder, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 385, 0, 0)}):Play()
-            TweenService:Create(Dropdown, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 403, 0, 73)}):Play()
-            TweenService:Create(DropdownFrameMain, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 392, 0, 0)}):Play()
-            wait(.3)
             DropdownFrameMain.Visible = false
             DropdownFrameMainOutline.Visible = false
             Dropdown.Size = UDim2.new(0, 403, 0, 73)
+            ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolder.CanvasSize.Y.Offset - DropdownFrameMainOutline.AbsoluteSize.Y)
+            DropTog = false
         end
-        DropTog = not DropTog
     end)
-
-    function DropFunc:Clear()
-        CurrentSelectedText.Text = "..."
-        for i,v in next, DropItemHolder:GetChildren() do
-            if v.Name == "Item" then
-                v:Destroy()
-            end
-        end
-        itemcount = 0
-        framesize = 0
-        DropItemHolder.CanvasSize = UDim2.new(0,0,0,0)
-    end
-
-    function DropFunc:Add(t)
-        itemcount = itemcount + 1
-        framesize = framesize + 25
-
-        local Item = Instance.new("TextButton")
-
-        Item.Name = "Item"
-        Item.Parent = DropItemHolder
-        Item.BackgroundColor3 = Color3.fromRGB(48, 51, 57)
-        Item.Size = UDim2.new(0, 379, 0, 25)
-        Item.AutoButtonColor = false
-        Item.Font = Enum.Font.Gotham
-        Item.Text = t
-        Item.TextColor3 = Color3.fromRGB(212, 212, 212)
-        Item.TextSize = 14.000
-        Item.MouseButton1Click:Connect(function()
-            TweenService:Create(DropItemHolder, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 385, 0, 0)}):Play()
-            TweenService:Create(Dropdown, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 403, 0, 73)}):Play()
-            TweenService:Create(DropdownFrameMain, TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 392, 0, 0)}):Play()
-            wait(.3)
+    
+    local function CreateItem(itemText, index)
+        local DropItem = Instance.new("TextButton")
+        DropItem.Name = "DropItem_" .. index
+        DropItem.Parent = DropItemHolder
+        DropItem.BackgroundColor3 = Color3.fromRGB(48, 51, 57)
+        DropItem.BorderSizePixel = 0
+        DropItem.Size = UDim2.new(0, 385, 0, 34)
+        DropItem.Font = Enum.Font.Gotham
+        DropItem.Text = itemText
+        DropItem.TextColor3 = Color3.fromRGB(212, 212, 212)
+        DropItem.TextSize = 14.000
+        
+        DropItem.MouseEnter:Connect(function()
+            DropItem.BackgroundColor3 = Color3.fromRGB(52, 55, 60)
+        end)
+        
+        DropItem.MouseLeave:Connect(function()
+            DropItem.BackgroundColor3 = Color3.fromRGB(48, 51, 57)
+        end)
+        
+        DropItem.MouseButton1Click:Connect(function()
+            CurrentSelectedText.Text = itemText
             DropdownFrameMain.Visible = false
             DropdownFrameMainOutline.Visible = false
             Dropdown.Size = UDim2.new(0, 403, 0, 73)
-            CurrentSelectedText.Text = t
-            callback(t)
-            DropTog = not DropTog
+            ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolder.CanvasSize.Y.Offset - DropdownFrameMainOutline.AbsoluteSize.Y)
+            DropTog = false
+            if callback then
+                callback(itemText)
+            end
         end)
-
-        Item.MouseEnter:Connect(function()
-            TweenService:Create(Item, TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(52, 55, 60)}):Play()
-        end)
-
-        Item.MouseLeave:Connect(function()
-            TweenService:Create(Item, TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(48, 51, 57)}):Play()
-        end)
-
-        DropItemHolder.CanvasSize = UDim2.new(0, 0, 0, framesize + 10)
+        
+        framesize = framesize + DropItem.AbsoluteSize.Y
+        itemcount = itemcount + 1
     end
 
-    if defaultValue and table.find(list, defaultValue) then
-        CurrentSelectedText.Text = defaultValue
-        callback(defaultValue)
+    for i, v in ipairs(list) do
+        CreateItem(v, i)
     end
-
+    
     return DropFunc
 end
 			
