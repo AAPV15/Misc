@@ -1,3 +1,5 @@
+--original: https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt
+
 local DiscordLib = {}
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
