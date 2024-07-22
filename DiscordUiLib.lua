@@ -2418,6 +2418,14 @@ function ChannelContent:Slider(text, min, max, start, step, callback)
     ValueLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     ValueLabel.TextSize = 10.000
 
+    local function formatValue(value)
+        if step < 1 then
+            return string.format("%g", value) -- Formats the value without unnecessary trailing zeros
+        else
+            return tostring(math.floor(value))
+        end
+    end
+
     local function move(input)
         local pos = UDim2.new(
             math.clamp((input.Position.X - SliderFrame.AbsolutePosition.X) / SliderFrame.AbsoluteSize.X, 0, 1),
@@ -2431,7 +2439,7 @@ function ChannelContent:Slider(text, min, max, start, step, callback)
         Zip.Position = pos
         local value = ((pos.X.Scale * max) / max) * (max - min) + min
         value = math.floor(value / step + 0.5) * step -- Snap to step
-        ValueLabel.Text = string.format("%.2f", value)
+        ValueLabel.Text = formatValue(value)
         pcall(callback, value)
     end
 
@@ -2459,14 +2467,13 @@ function ChannelContent:Slider(text, min, max, start, step, callback)
         tochange = math.floor(tochange / step + 0.5) * step -- Snap to step
         CurrentValueFrame.Size = UDim2.new((tochange or 0) / max, 0, 0, 8)
         Zip.Position = UDim2.new((tochange or 0) / max, -6, -0.644999981, 0)
-        ValueLabel.Text = string.format("%.2f", (tochange and ((tochange / max) * (max - min) + min) or 0))
+        ValueLabel.Text = formatValue((tochange and ((tochange / max) * (max - min) + min) or 0))
         pcall(callback, tochange)
     end
 
     ChannelHolder.CanvasSize = UDim2.new(0, 0, 0, ChannelHolderLayout.AbsoluteContentSize.Y)
     return SliderFunc
 end
-
 			
 			function ChannelContent:Seperator()
 				local Seperator1 = Instance.new("Frame")
