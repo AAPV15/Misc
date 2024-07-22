@@ -1,4 +1,5 @@
 --original: https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt
+--i made this because the original ui lib had issues i wanted to fix, i also wanted to adjust some stuff
 
 local DiscordLib = {}
 local UserInputService = game:GetService("UserInputService")
