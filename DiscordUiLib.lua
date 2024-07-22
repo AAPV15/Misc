@@ -2426,6 +2426,12 @@ function ChannelContent:Slider(text, min, max, start, step, callback)
         end
     end
 
+    -- Ensure the initial value is snapped to the step size
+    local initialValue = math.floor(start / step + 0.5) * step
+    CurrentValueFrame.Size = UDim2.new((initialValue or 0) / max, 0, 0, 8)
+    Zip.Position = UDim2.new((initialValue or 0) / max, -6, -0.644999981, 0)
+    ValueLabel.Text = formatValue(initialValue)
+
     local function move(input)
         local pos = UDim2.new(
             math.clamp((input.Position.X - SliderFrame.AbsolutePosition.X) / SliderFrame.AbsoluteSize.X, 0, 1),
