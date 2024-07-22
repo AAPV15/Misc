@@ -1,7 +1,5 @@
 --original: https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt
 --this was made to fix specific issues i had
---dashhegufvgygvgethhisfdvadvsggvfvfasfasafaddfaeq1234657699kh
---fdashhegufvgygvgethhisfdvadvsggvfvfasfasafaddfaeq1234657699khdashhegufvgygvgethhisfdvadvsggvfvfasfasafaddfaeq1234657699khdashhegufvgygvgethhisfdvadvsggvfvfasfasafaddfaeq1234657699khdashhegufvgygvgethhisfdvadvsggvfvfasfasafaddfaeq1234657699khdashhegufvgygvgethhisfdvadvsggvfvfasfasafaddfaeq1234657699kh
 
 local DiscordLib = {}
 local UserInputService = game:GetService("UserInputService")
