@@ -2174,7 +2174,6 @@ function DiscordLib:Window(text)
 				ChannelHolder.CanvasSize = UDim2.new(0,0,0,ChannelHolderLayout.AbsoluteContentSize.Y)
 			end
 			function ChannelContent:Toggle(text,default,callback)
-				local toggled = false
 				local Toggle = Instance.new("TextButton")
 				local ToggleTitle = Instance.new("TextLabel")
 				local ToggleFrame = Instance.new("Frame")
@@ -2239,7 +2238,7 @@ function DiscordLib:Window(text)
 				Icon.ImageColor3 = Color3.fromRGB(114, 118, 125)
 				
 				Toggle.MouseButton1Click:Connect(function()
-					if toggled == false then
+					if default == false then
 						TweenService:Create(
 							Icon,
 							TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
